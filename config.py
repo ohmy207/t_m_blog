@@ -19,7 +19,9 @@ settings = dict(
 
 DB_PORT = 27017
 DB_HOST = "localhost"
-BLOG_DB = "tm_blog"
+BLOG_DB = "t_m_blog"
 PORT = 8888
 
-cache_duration = 60
+Redis_HOST = "localhost"
+Redis_PORT = 6379
+Redis_DB = 0

@@ -2,7 +2,7 @@ import tornado.web
 from config import settings
 import redis
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.Redis(host=config.Redis_HOST, port=Redis_PORT, db=Redis_DB)
 
 class BaseHandler(tornado.web.RequestHandler):
 	def get_current_user(self):
