@@ -106,7 +106,7 @@ class CommentHandler(BaseHandler, DataProc):
 	def post(self, doc_id):
 		comments = self.get_one("doc", _id = ObjectId(doc_id))['comments']
 		comment = dict(
-				nickname = settings['author'],
+				nickname = self.get_current_user(),
 				email = settings["email"],
 				content = self.get_argument("content"),
 				post_time = datetime.now()

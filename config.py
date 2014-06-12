@@ -4,6 +4,7 @@ settings = dict(
 		blog_name = u"T_M_Blog",
 		username = "admin",
 		password="111111",
+		email="share@email"
 		template_path = os.path.join(os.path.dirname(__file__), "templates"),
 		static_path = os.path.join(os.path.dirname(__file__), "static"),
 		login_url = "/admin/login",
