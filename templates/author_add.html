@@ -1,0 +1,67 @@
+{% extends admin_base.html %}
+{% block title %}add_author{% end %}
+{% block main %}
+<h2 class="l-centered">Authors</h2>
+<hr>
+<div class="marketing-ribbon centered-div">
+</div>
+<div class="marketing-ribbon centered-div">
+	 <table class="full-size-table pure-table pure-table-bordered ">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if users %}
+            {% for i,user in enumerate(users) %}
+            <tr>
+                <td>
+                    {{i+1}}
+                </td>
+                <td>
+					{{user['username']}}
+                </td>
+                <td>
+					<a href="/admin/author/edit/{{str(user['_id'])}}">edit</a>  
+					{% if not user['username'] == "admin" %}
+					|<a href="/admin/author/rm/{{str(user['_id'])}}">delete</a>
+					{% end %}
+                </td>
+            </tr>
+            {% end %}
+            {% end %}
+        </tbody>
+    </table>
+
+    <h3>Add new author:</h3>
+    <form class="pure-form" method="post" onsubmit="return checkForm()">
+        <fieldset>
+            <input id="username" name="username" type="text" placeholder="Input username">
+            <input id="password" name="password" type="password" placeholder="Input password">
+
+            <button type="submit" class="pure-button notice">submit</button>
+        </fieldset>
+		<script type="text/javascript">
+	function checkForm(){
+	if(document.getElementById("username").value.length<4){
+		alert("len of username < 4！");
+		return false;
+	}
+	if(document.getElementById("password").value.length<6){
+		alert("len of password < 6");
+		return false;
+	}
+}
+    </script>
+
+    </form>
+</div>
+{% end %}

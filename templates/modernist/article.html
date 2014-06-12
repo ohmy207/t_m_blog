@@ -1,0 +1,131 @@
+{% extends base.html %}
+{% block title %}Hi{% end %}
+{% if settings['description'] %}
+    {% block description %}{{ settings["description"] }}{% end %}
+{% end %}
+{% if settings['keywords'] %}
+    {%block keywords%}{{','.join(settings["keywords"])}}{%end%}
+{% end %}
+    
+{% block content %}
+	<article class="post">
+    <header>
+        <time datetime="{{article['post_time'].strftime('%b-%d-%y %H:%M:%S')}}">
+          <a href="#">{{article['post_time'].strftime('%b-%d-%Y')}}</a>
+        </time>
+        <h1 class="title"><a href="#">{{article['title']}}</a>
+        </h1>
+    </header>
+    <div class="entry">
+		{% raw article['content'] %}
+    </div>
+    <footer class="end-sep">
+		<div >
+			标签：
+			{% for tag in tags %}
+			{% if tag %}
+			<a href="#">{{tag['tag']}}</a>
+			{% end %}
+			{% end %}
+		</div>	
+		<p></p>
+		<div >
+			by&nbsp;&nbsp;{{article['author']}}
+		</div>
+        <div class="clearfix"></div>
+    </footer>
+	<a name="comment"></a>
+	<section id="comment">
+	<h1 class="title">Comment:</h1>
+	{% if comments %}
+	{% for comment in comments %}
+	<header>
+	{{comment['nickname']}}:&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="yus_replyTo('309815','{{comment["nickname"]}}')">Reply</a>
+	</header>
+	<div class="entry">
+		&nbsp;&nbsp;&nbsp;&nbsp;{% raw comment['content'] %}
+	</div>
+	<footer class="end-sep">
+		<div>
+			<time datetime="{{comment['post_time'].strftime('%b-%d-%y %H:%M:%S')}}">
+			<a href="#">{{comment['post_time'].strftime('%b-%d-%Y')}}</a>
+			</time>
+		</div>
+	<div class="clearfix"></div>
+	</footer>
+	{% end %}
+	{% else %}
+	No Comment!!
+	{% end %}
+	</section>
+	<div>
+		<h2>发表评论</h2>
+		<form class="pure-form pure-form-stacked" method="post" onsubmit="return checkForm()">
+			<input id="nickname" name ="nickname" class="pure-input-1 add-post" type="input">
+			<label for="title">
+				昵称 (必填)		
+			</label>
+			<p></p>
+			<input id="email" name ="email" class="pure-input-1 add-post" type="input">
+			<label for="title">
+				电子邮箱(必填)
+			</label>
+			<p></p>
+			<textarea id="content" name="content" cols="20" class="pure-input-1 add-post" placeholder="Write down here"></textarea>
+			<button type="submit">
+				Submit
+			</button>	
+			<script type="text/javascript">
+    function yus_replyTo(commentID,author) {
+		var inReplyTo='@<a href="#">'+author+'<\/a>: ';
+    	var myField;
+        if (document.getElementById('content') && document.getElementById('content').type == 'textarea') {
+    		myField = document.getElementById('content');
+    	} else {
+    		return false;
+    	}
+    	if (document.selection) {
+    		myField.focus();
+    		sel = document.selection.createRange();
+    		sel.text = inReplyTo;
+    		myField.focus();
+    	}
+    	else if (myField.selectionStart || myField.selectionStart == '0') {
+    		var startPos = myField.selectionStart;
+    		var endPos = myField.selectionEnd;
+    		var cursorPos = endPos;
+    		myField.value = myField.value.substring(0, startPos)
+    					  + inReplyTo
+    					  + myField.value.substring(endPos, myField.value.length);
+    		cursorPos += inReplyTo.length;
+    		myField.focus();
+    		myField.selectionStart = cursorPos;
+    		myField.selectionEnd = cursorPos;
+    	}
+    	else {
+    		myField.value += inReplyTo;
+    		myField.focus();
+    	}
+   	}
+	function checkForm(){
+	if(document.getElementById("nickname").value.length<=0){
+		alert("nickname not be null！");
+		return false;
+	}
+	if(document.getElementById("content").value.length<=0){
+		alert("content not be null！");
+		return false;
+	}
+	var em = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	if(!em.test(document.getElementById("email").value)){
+		alert("请输入有效的邮箱地址！");
+		return false;
+	}
+}
+    </script>
+
+
+		</form>
+	</div>
+	</article>
+{% end %}

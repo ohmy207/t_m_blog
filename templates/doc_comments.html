@@ -1,0 +1,99 @@
+{% extends admin_base.html %}
+{% block main %}
+<h2 class="l-centered">Comments</h2>
+<hr>
+<div class="marketing-ribbon centered-div">
+    <table class="full-size-table pure-table pure-table-bordered ">
+		  <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Content
+                </th>
+                <th>
+                    PostTime
+                </th>
+                <th>
+                    Method
+                </th>
+            </tr>
+        </thead>
+		<tbody>
+			{% if comments %}
+			{% for i,comment in enumerate(comments) %}
+            <tr>
+                <td>
+                  {{i+1}}
+                </td>
+                <td>
+					{{comment['nickname']}}
+                </td>
+                <td>
+					{% raw comment['content'] %}
+                </td>
+                <td>
+					{{comment['post_time'].strftime('%b-%d-%Y')}}
+                </td>
+                <td>
+					<a href="javascript:void(0)" onclick="yus_replyTo('309815','{{comment["nickname"]}}')">Reply</a>|
+					<a href="/admin/doc/delcomment/{{i}}/{{doc_id}}">delete</a>
+                </td>
+            </tr>
+            {% end %}
+			{% else %}
+			No Comment!!
+			{% end %}
+        </tbody>
+    </table>
+	<div>
+		<h2>发表评论</h2>
+		<form class="pure-form pure-form-stacked" method="post">
+			<textarea id="content" name="content" cols="20" class="pure-input-1 add-post" placeholder="Write down here"></textarea>
+			<button type="submit">
+				Submit
+			</button>	
+			<script type="text/javascript">
+    function yus_replyTo(commentID,author) {
+		var inReplyTo='@<a href="#">'+author+'<\/a>: ';
+    	var myField;
+        if (document.getElementById('content') && document.getElementById('content').type == 'textarea') {
+    		myField = document.getElementById('content');
+    	} else {
+    		return false;
+    	}
+    	if (document.selection) {
+    		myField.focus();
+    		sel = document.selection.createRange();
+    		sel.text = inReplyTo;
+    		myField.focus();
+    	}
+    	else if (myField.selectionStart || myField.selectionStart == '0') {
+    		var startPos = myField.selectionStart;
+    		var endPos = myField.selectionEnd;
+    		var cursorPos = endPos;
+    		myField.value = myField.value.substring(0, startPos)
+    					  + inReplyTo
+    					  + myField.value.substring(endPos, myField.value.length);
+    		cursorPos += inReplyTo.length;
+    		myField.focus();
+    		myField.selectionStart = cursorPos;
+    		myField.selectionEnd = cursorPos;
+    	}
+    	else {
+    		myField.value += inReplyTo;
+    		myField.focus();
+    	}
+   	}
+    </script>
+
+
+		</form>
+	
+	</div>
+</div>
+{% end %}

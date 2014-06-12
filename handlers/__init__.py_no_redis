@@ -1,0 +1,22 @@
+import tornado.web
+from config import settings
+
+class BaseHandler(tornado.web.RequestHandler):
+	def get_current_user(self):
+		return self.get_secure_cookie("user")
+
+	def render(self, template_name, **kwargs):
+		if not self.request.path.startswith("/admin"):
+			template_name = settings["theme"] + '/' + template_name
+		super(BaseHandler, self).render(
+			template_name,
+			settings = settings,
+			**kwargs
+		)
+	def render_string(self, template_name, **kwargs):
+		html_generated = super(BaseHandler, self).render_string(
+				template_name,
+				**kwargs
+			)
+		print self.request.uri
+		return html_generated

@@ -1,0 +1,12 @@
+{% extends admin_base.html %}
+{% block title %}edit category{% end %}
+{% block main %}
+<h2 class="l-centered">Delete User</h2>
+<hr>
+<div class="marketing-ribbon centered-div l-centered">
+	<p>你确定要删除user <b style="color:red;">{{user['username']}}</b> ?</p>
+    <form method="post">
+        <button type="submit" class="pure-button notice">Delete</button>
+    </form>
+</div>
+{% end %}

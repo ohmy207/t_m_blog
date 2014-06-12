@@ -1,0 +1,41 @@
+{% extends admin_base.html %}
+{% block title %}edit post{% end %}
+{% block main %}
+<h2 class="l-centered">Delete Post</h2>
+<hr>
+<div class="marketing-ribbon centered-div l-centered">
+	<p>确定要删除Comment<b style="color:red;"></b> ?</p>
+	<div class="marketing-ribbon centered-div">
+    <table class="full-size-table pure-table pure-table-bordered ">
+		  <thead>
+            <tr>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Content
+                </th>
+                <th>
+                    PostTime
+                </th>
+            </tr>
+        </thead>
+		<tbody>
+            <tr>
+                <td>
+					{{comment['nickname']}}
+                </td>
+                <td>
+					{% raw comment['content'] %}
+                </td>
+                <td>
+					{{comment['post_time'].strftime('%b-%d-%Y')}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <form method="post">
+        <button type="submit" class="pure-button notice">Delete</button>
+    </form>
+</div>
+{% end %}

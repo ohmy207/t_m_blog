@@ -1,0 +1,30 @@
+{% extends base.html %}
+{% block title %}Hi{% end %}
+    
+{% block content %}
+    {% for article in articles %}
+	<article class="post">
+    <header>
+        <time datetime="{{article['post_time'].strftime('%b-%d-%y %H:%M:%S')}}">
+		<a href="/article/{{str(article['_id'])}}">{{article['post_time'].strftime('%b-%d-%Y')}}</a>
+        </time>
+		<h1 class="title"><a href="/article/{{str(article['_id'])}}">{{article['title']}}</a>
+        </h1>
+    </header>
+    <div class="entry">
+		{% if len(article['content']) > 200 %}
+		{% raw article['content'][0:200] + "......" %}
+		{% else %}
+		{% raw article['content'] %}
+		{% end %}
+    </div>
+    <footer class="end-sep">
+        <div class="alignleft">
+            <a href="/article/{{str(article['_id'])}}">Read More</a>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+	</article>
+    {% end %}
+    {% module Page(total, current_page) %}
+{% end %}

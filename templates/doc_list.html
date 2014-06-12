@@ -1,0 +1,55 @@
+{% extends admin_base.html %}
+{% block title %}blogs{% end %}
+{% block main %}
+<h2 class="l-centered">Blogs</h2>
+<hr>
+<div class="marketing-ribbon centered-div">
+    <table class="full-size-table pure-table pure-table-bordered ">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Title
+                </th>
+				<th>
+					Author
+				</th>
+                <th>
+                    PostTime
+                </th>
+                <th>
+                    Method
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if docs %}
+            {% for i,doc in enumerate(docs) %}
+            <tr>
+                <td>
+                  {{i+1}}
+                </td>
+                <td>
+                  <a href="/admin/doc/edit/{{str(doc['_id'])}}">{{doc['title']}}</a>
+				</td>
+				<td>
+					{{doc['author']}}
+				</td>
+                <td>
+                    {{doc['post_time'].strftime("%b-%d-%y")}}
+                </td>
+                <td>
+					<a href="/admin/doc/edit/{{str(doc['_id'])}}">edit</a>|
+					<a href="/admin/doc/comment/{{str(doc['_id'])}}">comments</a>|
+					<a href="/admin/doc/delete/{{str(doc['_id'])}}">delete</a>
+                </td>
+            </tr>
+            {% end %}
+            {% end %}
+        </tbody>
+    </table>
+</div>
+{% module Page(total, current_page) %}
+{% end %}

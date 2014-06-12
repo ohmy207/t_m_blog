@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+           TM_Blog 
+        </title>
+        <link rel="stylesheet" href="/static/css/admin.css">
+        <link rel="stylesheet" href="/static/css/base-min.css">
+        <link rel="stylesheet" href="/static/css/pure-min.css">
+    </head>
+    <body>
+        <div class="pure-g-r " id="layout">
+            <div class="pure-u" id="menu">
+                <div class="pure-menu pure-menu-open">
+                    <a class="pure-menu-heading" href="/admin">Home</a>
+                    <ul>
+                        <li class=" ">
+                            <a href="/admin/add_doc">Add Blog</a>
+                        </li>
+                        <li class=" ">
+                            <a href="/admin/docs">Blog List</a>
+                        </li>
+                        <li class=" ">
+                            <a href="/admin/tags">Tags</a>
+                        </li>
+						{% if author == "adm"%}
+                        <li class=" ">
+                            <a href="/admin/add_author">Authors</a>
+                        </li>
+						{% end %}
+                        <li class=" menu-item-divided">
+                            <a href="/admin/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pure-u" id="main">
+                {% block main %}
+                {% end %}
+            </div>
+        </div>
+    </body>
+</html>
