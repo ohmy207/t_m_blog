@@ -1,5 +1,5 @@
 import tornado.web
-from config import settings
+import config
 import redis
 
 r = redis.Redis(host=config.Redis_HOST, port=Redis_PORT, db=Redis_DB)
@@ -10,10 +10,10 @@ class BaseHandler(tornado.web.RequestHandler):
 
 	def render(self, template_name, **kwargs):
 		if not self.request.path.startswith("/admin"):
-			template_name = settings["theme"] + '/' + template_name
+			template_name = config.settings["theme"] + '/' + template_name
 		super(BaseHandler, self).render(
 			template_name,
-			settings = settings,
+			settings = config.settings,
 			**kwargs
 		)
 	def render_string(self, template_name, **kwargs):
